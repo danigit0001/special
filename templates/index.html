@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moon Reveal</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & box-sizing */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 100%;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: 'Roboto', sans-serif;
+      padding: 2rem 1rem;
+      overflow-x: hidden;
+    }
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      color: #e91e63;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    .subtitle {
+      font-size: 1.25rem;
+      color: #555;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .container {
+      width: 90%;
+      max-width: 500px;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+    #moon, #gf {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      transition: filter 0.5s, transform 0.5s, opacity 0.8s;
+      display: block;
+    }
+    #moon:hover {
+      transform: scale(1.02);
+    }
+    /* Show gf in normal flow, no absolute positioning */
+    #gf {
+      display: none;
+      opacity: 0;
+      margin-top: 1rem;
+    }
+    .message {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #d81b60;
+      margin-top: 1rem;
+      opacity: 0;
+      transition: opacity 1s ease-in;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    button {
+      margin-bottom: 1rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+      font-family: 'Great Vibes', cursive;
+      background: #e91e63;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: background 0.3s, transform 0.2s;
+    }
+    button:hover {
+      background: #c2185b;
+      transform: translateY(-2px);
+    }
+    button:disabled {
+      background: #aaa;
+      cursor: default;
+      transform: none;
+    }
+    /* Floating hearts */
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .heart {
+      position: absolute;
+      font-size: 1.5rem;
+      color: rgba(255, 82, 147, 0.8);
+      animation: float 3s ease-out forwards;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🌙 Moon Reveal for You 🌙</h1>
+  <div class="subtitle">Each click unveils a piece of my heart ❤️</div>
+  <div class="container">
+    <img id="moon" src="{{ url_for('static', filename='images/moon.jpeg') }}" alt="Moon" style="filter: blur(20px);">
+    <img id="gf" src="{{ url_for('static', filename='images/gf.jpeg') }}" alt="My Love">
+    <div class="hearts" id="hearts"></div>
+  </div>
+  <button id="clear-btn">Reveal My Love</button>
+  <div class="message" id="message">You light up my life, always.</div>
+
+  <script>
+    let blurLevel = 20;
+    const moonImg = document.getElementById('moon');
+    const gfImg   = document.getElementById('gf');
+    const btn     = document.getElementById('clear-btn');
+    const message = document.getElementById('message');
+    const heartsContainer = document.getElementById('hearts');
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.textContent = '❤️';
+      heart.style.left = Math.random() * 100 + '%';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 3000);
+    }
+
+    btn.addEventListener('click', () => {
+      if (blurLevel > 0) {
+        blurLevel = Math.max(0, blurLevel - 4);
+        moonImg.style.filter = `blur(${blurLevel}px)`;
+        for (let i = 0; i < 8; i++) createHeart();
+      } else {
+        // Hide moon, show gf beneath
+        moonImg.style.opacity = 0;
+        setTimeout(() => {
+          moonImg.style.display = 'none';
+          gfImg.style.display = 'block';
+          setTimeout(() => { gfImg.style.opacity = 1; }, 50);
+        }, 500);
+        btn.disabled = true;
+        btn.textContent = "Always & Forever";
+        message.style.opacity = 1;
+        const rain = setInterval(createHeart, 200);
+        setTimeout(() => clearInterval(rain), 5000);
+      }
+    });
+  </script>
+</body>
+</html>
