@@ -1,11 +1,11 @@
 {
   "version": 2,
   "builds": [
-    { "src": "app.py", "use": "@vercel/python" },
-    { "src": "requirements.txt", "use": "@vercel/python" }
+    { "src": "app.py",          "use": "@vercel/python" },
+    { "src": "requirements.txt","use": "@vercel/python" }
   ],
   "routes": [
-    { "src": "/static/(.*)", "dest": "/static/$1" },
-    { "src": "/(.*)",           "dest": "app.py" }
+    { "handle": "filesystem" },               // ← serve any matching file
+    { "src": "/(.*)",      "dest": "app.py" } // ← then fall back to your Flask app
   ]
 }
