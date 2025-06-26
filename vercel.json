@@ -5,7 +5,7 @@
     { "src": "requirements.txt","use": "@vercel/python" }
   ],
   "routes": [
-    { "handle": "filesystem" },               // ← serve any matching file
-    { "src": "/(.*)",      "dest": "app.py" } // ← then fall back to your Flask app
+    { "handle": "filesystem" },
+    { "src": "/(.*)",      "dest": "app.py" }
   ]
 }
