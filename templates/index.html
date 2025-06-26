@@ -2,116 +2,255 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Moon Reveal</title>
-  <!-- Google Fonts -->
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Reveal My Moon</title>
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
   <style>
-    /* Reset & box-sizing */
-    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    /* RESET & BOX-SIZING */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: radial-gradient(circle at center, #fce4ec, #f8bbd0, #f48fb1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-family: 'Roboto', sans-serif;
-      padding: 2rem 1rem;
       position: relative;
       min-height: 100vh;
       overflow-x: hidden;
+      padding: 2rem 1rem;
+      font-family: 'Roboto', sans-serif;
+      background: radial-gradient(circle at center, #fce4ec, #f8bbd0, #f48fb1);
     }
-    /* Golden vignette */
+    /* GOLDEN VIGNETTE */
     body::before {
       content: '';
-      position: absolute;
-      top:0; left:0; width:100%; height:100%;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: radial-gradient(circle, rgba(255,215,0,0.2), transparent);
       pointer-events: none;
     }
-    /* Twinkling stars */
-    .star { position: absolute; width:2px; height:2px; background:white; border-radius:50%; opacity:0.8; animation:twinkle 2s infinite ease-in-out; }
+    /* STARS */
+    .star {
+      position: absolute; width: 2px; height: 2px;
+      background: white; border-radius: 50%; opacity: 0.8;
+      animation: twinkle 2s infinite ease-in-out;
+    }
     @keyframes twinkle { 0%,100%{opacity:0.2;}50%{opacity:0.8;} }
+
     h1 {
-      font-family:'Playfair Display',serif; font-size:3rem; color:#880e4f;
-      text-shadow:2px 2px 4px rgba(0,0,0,0.3); margin-bottom:0.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; color: #880e4f;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      text-align: center;
+      margin-bottom: 0.5rem;
     }
     .subtitle {
-      font-size:1.25rem; color:#555; margin-bottom:1.5rem; text-align:center;
+      text-align: center;
+      font-size: 1.25rem;
+      color: #555;
+      margin-bottom: 1.5rem;
     }
-    .container { width:90%; max-width:500px; margin-bottom:1.5rem; text-align:center; position:relative; }
+
+    .container {
+      width: 90%; max-width: 500px;
+      margin: 0 auto 1.5rem auto;
+      position: relative;
+      text-align: center;
+    }
     #moon, #gf {
-      width:100%; border-radius:20px; box-shadow:0 6px 20px rgba(0,0,0,0.2);
-      transition:filter 0.5s, transform 0.5s, opacity 0.8s; display:block; margin:0 auto;
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      transition: filter 0.5s, transform 0.5s, opacity 0.8s;
+      display: block; margin: 0 auto;
     }
-    #moon:hover { transform:scale(1.02); }
-    #gf { display:none; opacity:0; margin-top:1rem; }
+    #moon:hover { transform: scale(1.02); }
+    #moon { filter: blur(20px); }
+    #gf {
+      display: none;
+      opacity: 0;
+      margin-top: 1rem;
+    }
+
+    /* BUTTON */
     button {
-      margin-bottom:1rem; padding:0.75rem 1.5rem;
-      font-size:1.2rem; font-family:'Great Vibes',cursive;
-      background:#880e4f; color:#fff; border:none; border-radius:20px;
-      cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.2);
-      transition:background 0.3s, transform 0.2s;
+      display: block;
+      margin: 0 auto 1rem auto;
+      padding: 0.75rem 1.5rem;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.2rem;
+      background: #880e4f;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: background 0.3s, transform 0.2s;
     }
-    button:hover { background:#6a1b4d; transform:translateY(-2px); }
-    button:disabled { background:#aaa; cursor:default; transform:none; }
+    button:hover { background: #6a1b4d; transform: translateY(-2px); }
+    button:disabled { background: #aaa; cursor: default; transform: none; }
+
+    /* TYPEWRITER MESSAGE */
     .message {
-      font-family:'Great Vibes',cursive; font-size:2rem; color:#6a1b4d;
-      margin-top:1rem; opacity:0; text-align:center; min-height:2em;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #6a1b4d;
+      margin-top: 1rem;
+      opacity: 0;
+      text-align: center;
+      min-height: 2em;
     }
-    /* Typewriter effect */
-    .typewriter { overflow:hidden; border-right:.15em solid #6a1b4d; white-space:nowrap;
-      animation:typing 3s steps(30,end), blink .75s step-end infinite; }
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid #6a1b4d;
+      white-space: nowrap;
+      animation: typing 3s steps(30,end), blink .75s step-end infinite;
+    }
     @keyframes typing { from{width:0;} to{width:100%;} }
     @keyframes blink { 50%{border-color:transparent;} }
-    /* Float animations */
-    .icons { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden; }
+
+    /* FLOATING ICONS */
+    .icons {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
     .icon {
-      position:absolute; font-size:1.5rem; animation:float 3s ease-out forwards;
+      position: absolute;
+      font-size: 1.5rem;
+      animation: float 3s ease-out forwards;
     }
-    .heart { color:rgba(255,82,147,0.8); }
-    .flower { color:rgba(255,180,220,0.9); }
-    .crown, .scepter { color:rgba(255,215,0,0.9); }
-    @keyframes float { 0%{transform:translateY(0) scale(1); opacity:1;} 100%{transform:translateY(-150px) scale(1.5); opacity:0;} }
-    /* Confetti petals & gold */
-    .confetti, .gold {
-      position:absolute; width:6px; height:6px; opacity:0.9; animation:fall 3s ease-in forwards;
+    @keyframes float {
+      0%   { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
     }
-    .confetti { background:#ffe; }
-    .gold { background:gold; }
+    .heart   { color: rgba(255,82,147,0.8); }
+    .flower  { color: rgba(255,180,220,0.9); }
+    .crown   { color: rgba(255,215,0,0.9); }
+    .scepter { color: rgba(255,215,0,0.9); }
+
+    /* GRAND FINALE CONFETTI */
+    .gold, .confetti {
+      position: absolute; width: 6px; height: 6px;
+      opacity: 0.9;
+      animation: fall 3s ease-in forwards;
+    }
+    .gold     { background: gold; }
+    .confetti { background: #ffe; }
     @keyframes fall { 0%{top:0%; opacity:1;} 100%{top:100%; opacity:0;} }
+
+    /* CAPTION */
+    .caption {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: #880e4f;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: opacity 1s ease;
+      margin-top: 0.5rem;
+    }
   </style>
 </head>
 <body>
+  <!-- Twinkling stars -->
   <div id="stars"></div>
-  <h1>👑 Queen of My Heart 👑</h1>
+
+  <h1 id="main-title">🌙 Reveal My Moon 🌙</h1>
   <div class="subtitle">You reign supreme in my universe ❤️🌸</div>
+
   <div class="container">
-    <img id="moon" src="{{ url_for('static', filename='images/moon.jpeg') }}" alt="Moon" style="filter:blur(20px);">
-    <img id="gf" src="{{ url_for('static', filename='images/gf.jpeg') }}" alt="My Queen">
+    <img id="moon" src="{{ url_for('static', filename='images/moon.jpeg') }}" alt="Moon">
+    <img id="gf"   src="{{ url_for('static', filename='images/gf.jpeg') }}" alt="My Queen">
+    <div class="caption" id="caption">You are the <strong>Moon</strong> to my Heart</div>
     <div class="icons" id="icons"></div>
   </div>
+
   <button id="clear-btn">Reveal My Love</button>
   <div class="message typewriter" id="message"></div>
+
   <script>
-    // Stars
-    for(let i=0;i<60;i++){let s=document.createElement('div');s.className='star';s.style.top=Math.random()*100+'%';s.style.left=Math.random()*100+'%';s.style.animationDelay=Math.random()*2+'s';document.body.appendChild(s);}    
-    const moon=document.getElementById('moon'), gf=document.getElementById('gf'), btn=document.getElementById('clear-btn');
-    const message=document.getElementById('message'), icons=document.getElementById('icons');
-    function createIcon(type){let e=document.createElement('div');e.className=`icon ${type}`;switch(type){case'heart':e.textContent='❤️';break;case'flower':e.textContent='🌸';break;case'crown':e.textContent='👑';break;case'scepter':e.textContent='🗡️';break;}e.style.left=Math.random()*100+'%';icons.appendChild(e);setTimeout(()=>e.remove(),3000);}
-    let blur=20;
-    btn.addEventListener('click',()=>{
-      if(blur>0){blur=Math.max(0,blur-4);moon.style.filter=`blur(${blur}px)`;
-        for(let i=0;i<12;i++){createIcon('heart'); createIcon('flower'); createIcon('crown');}
+    // Create stars
+    for (let i = 0; i < 60; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.top  = Math.random() * 100 + '%';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.animationDelay = Math.random() * 2 + 's';
+      document.body.appendChild(s);
+    }
+
+    const moon    = document.getElementById('moon');
+    const gf      = document.getElementById('gf');
+    const btn     = document.getElementById('clear-btn');
+    const message = document.getElementById('message');
+    const icons   = document.getElementById('icons');
+    const caption = document.getElementById('caption');
+    const title   = document.getElementById('main-title');
+    let blur = 20;
+
+    function createIcon(type) {
+      const e = document.createElement('div');
+      e.className = `icon ${type}`;
+      switch(type) {
+        case 'heart':   e.textContent = '❤️'; break;
+        case 'flower':  e.textContent = '🌸'; break;
+        case 'crown':   e.textContent = '👑'; break;
+        case 'scepter': e.textContent = '🗡️'; break;
+      }
+      e.style.left = Math.random() * 100 + '%';
+      icons.appendChild(e);
+      setTimeout(() => e.remove(), 3000);
+    }
+
+    btn.addEventListener('click', () => {
+      if (blur > 0) {
+        blur = Math.max(0, blur - 4);
+        moon.style.filter = `blur(${blur}px)`;
+
+        // spawn icons
+        for (let i = 0; i < 12; i++) {
+          createIcon('heart');
+          createIcon('flower');
+          createIcon('crown');
+        }
       } else {
-        moon.style.opacity=0;setTimeout(()=>{moon.style.display='none';gf.style.display='block';setTimeout(()=>gf.style.opacity=1,50);},500);
-        btn.disabled=true; btn.textContent="Always & Forever";
-        // message
-        const text="My Queen, you reign over my heart forever.";
-        let idx=0; message.textContent=''; message.style.opacity=1;
-        (function type(){ if(idx<text.length){message.textContent+=text[idx++]; setTimeout(type,80);} })();
-        // grand finale
-        const finale=setInterval(()=>{createIcon('heart'); createIcon('flower'); createIcon('crown'); createIcon('scepter');let g=document.createElement('div');g.className='gold';g.style.left=Math.random()*100+'%';document.body.appendChild(g);setTimeout(()=>g.remove(),3000);},200);
-        setTimeout(()=>clearInterval(finale),5000);
+        // final reveal
+        moon.style.opacity = 0;
+        setTimeout(() => {
+          moon.style.display = 'none';
+          gf.style.display   = 'block';
+          setTimeout(() => {
+            gf.style.opacity   = 1;
+            caption.style.opacity = 1;
+            title.textContent = "👑 Queen of My Heart 👑";
+          }, 50);
+        }, 500);
+
+        btn.disabled    = true;
+        btn.textContent = "Always & Forever";
+
+        // typewriter message
+        const text = "My Queen, you reign over my heart forever.";
+        let idx = 0;
+        message.textContent = '';
+        message.style.opacity = 1;
+        (function type() {
+          if (idx < text.length) {
+            message.textContent += text[idx++];
+            setTimeout(type, 80);
+          }
+        })();
+
+        // grand finale confetti
+        const finale = setInterval(() => {
+          createIcon('heart');
+          createIcon('flower');
+          createIcon('crown');
+          createIcon('scepter');
+          const g = document.createElement('div');
+          g.className = 'gold';
+          g.style.left = Math.random() * 100 + '%';
+          document.body.appendChild(g);
+          setTimeout(() => g.remove(), 3000);
+        }, 200);
+
+        setTimeout(() => clearInterval(finale), 5000);
       }
     });
   </script>
